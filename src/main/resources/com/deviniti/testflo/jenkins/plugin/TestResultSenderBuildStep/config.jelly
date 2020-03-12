@@ -1,0 +1,30 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    <f:entry title="Jira URL" field="jiraURL">
+      <f:textbox  />
+    </f:entry>
+
+    <f:entry title="User" field="jiraUserName">
+      <f:textbox  />
+    </f:entry>
+
+    <f:entry title="Password" field="jiraPassword">
+      <f:password  />
+    </f:entry>
+
+    <f:entry title="Test results directory" field="testResultsDirectory" description="This is a comma separated list of test result directories. You can also use Ant style patterns such as **/test-reports/*.xml">
+      <f:textbox  default="${descriptor.defaultTestResultsDirectory}" />
+    </f:entry>
+
+    <f:entry title="Missing Test Plan key parameter behavior"/>
+
+    <f:entry title="Fail task">
+      <f:radio name="missingTestPlanKeyStrategy" value="FAIL_TASK" checked="${instance.missingTestPlanKeyStrategy == 'FAIL_TASK' || !instance.missingTestPlanKeyStrategy}" />
+    </f:entry>
+
+    <f:entry title="Skip task">
+      <f:radio name="missingTestPlanKeyStrategy" value="SKIP_TASK" checked="${instance.missingTestPlanKeyStrategy == 'SKIP_TASK'}" />
+    </f:entry>
+
+    <f:validateButton title="Test connection" progress="Testing connection..." method="testConnection" with="jiraURL,jiraUserName,jiraPassword"/>
+</j:jelly>
