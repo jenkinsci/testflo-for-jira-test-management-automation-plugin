@@ -138,7 +138,7 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
 
         override fun isApplicable(aClass: Class<out AbstractProject<*, *>?>?) = true
 
-        override fun getDisplayName() = "TestFLO Automation test results sender"
+        override fun getDisplayName() = "TestFLO Automation test results publisher"
 
         @JellyMethod
         fun doTestConnection(@QueryParameter jiraURL: String, @QueryParameter jiraUserName: String, @QueryParameter jiraPassword: Secret): FormValidation {
