@@ -7,7 +7,8 @@
         <artifactId>plugin</artifactId>
         <version>3.50</version>
     </parent>
-    <artifactId>jenkins-test-results-publisher</artifactId>
+
+    <artifactId>testflo-test-results-publisher</artifactId>
     <packaging>hpi</packaging>
     <version>1.0.0</version>
     <name>TestFLO Test Results Publisher</name>
@@ -106,7 +107,7 @@
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <finalName>testflo-jenkins-plugin-${project.version}</finalName>
+        <finalName>testflo-test-results-publisher-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
