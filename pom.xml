@@ -9,6 +9,7 @@
         <version>3.50</version>
     </parent>
 
+    <groupId>io.jenkins.plugins</groupId>
     <artifactId>testflo-test-results-publisher</artifactId>
     <packaging>hpi</packaging>
     <version>1.0.0</version>
