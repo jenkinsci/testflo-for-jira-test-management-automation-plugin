@@ -16,6 +16,7 @@ import hudson.model.AbstractProject
 import hudson.model.Result.FAILURE
 import hudson.model.Run
 import hudson.model.TaskListener
+import hudson.security.Permission
 import hudson.tasks.BuildStepDescriptor
 import hudson.tasks.Notifier
 import hudson.tasks.Publisher
@@ -26,6 +27,8 @@ import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
 import java.io.File
 import java.nio.file.Files
+import jenkins.model.Jenkins
+import org.kohsuke.stapler.verb.POST
 
 val jiraRestClient = JiraRestClientImpl()
 val testResultSender: TestResultSender = TestResultSenderImpl(jiraRestClient)
@@ -141,7 +144,9 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
         override fun getDisplayName() = "TestFLO Automation test results publisher"
 
         @JellyMethod
+        @POST
         fun doTestConnection(@QueryParameter jiraURL: String, @QueryParameter jiraUserName: String, @QueryParameter jiraPassword: Secret): FormValidation {
+            Jenkins.get().checkPermission(Permission.CONFIGURE)
             val validationResult = jiraRestClient.validateJiraCredentials(
                     jiraUrl = jiraURL,
                     username = jiraUserName,
