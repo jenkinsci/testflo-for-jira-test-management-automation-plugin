@@ -12,7 +12,7 @@
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>testflo-test-results-publisher</artifactId>
     <packaging>hpi</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>TestFLO Test Results Publisher</name>
     <description>This plugin allows to publish test results to TestFLO app</description>
 
@@ -45,7 +45,7 @@
                     <artifactId>commons-cli</artifactId>
                 </exclusion>
             </exclusions>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
