@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>io.jenkins.plugins</groupId>
-    <artifactId>testflo-test-results-publisher</artifactId>
+    <artifactId>testflo-for-jira-test-management-automation</artifactId>
     <packaging>hpi</packaging>
     <version>1.0.1</version>
-    <name>TestFLO Test Results Publisher</name>
+    <name>TestFLO - Test Management for Jira</name>
     <description>This plugin allows to publish test results to TestFLO app</description>
 
     <properties>
