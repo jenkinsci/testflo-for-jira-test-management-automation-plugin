@@ -35,3 +35,24 @@ To make job possible to trigger from TestFLO app, it is required to parametrize 
 You can define default value, using these options: 
     - CREATE_AND_UPDATE
     - UPDATE_EXISTING
+
+#### Running tests from Jira
+Most common usage is to run tests from Jira, using TestFLO app.
+![](docs/images/jira_run.png)
+
+Clicking on run button triggers execution of selected job in Jenkins.
+![](docs/images/jenkins_progress.png)
+
+After Job completes, test results are sent back to Jira, which become Test Case issues on original Test Plan.
+![](docs/images/jira_results.png) 
+
+#### Running tests directly from Jenkins manually
+Another possible way to run tests is to trigger job execution manually, providing required parameters, which normally are handled automatically, using first approach.
+![](docs/images/jenkins_manual_run.png)
+
+In this case, job completed successfully fixing previous failed tests, displaying them in next Test Plan iteration.
+![](docs/images/jira_results_next_iteration.png)
+
+#### Running tests directly from Jenkins as a part of CI process
+It is also possible to use automatic job execution, e.g. after changes in code repository are pushed. This however requires specifying default parameters in plugin configuration.
+![](docs/images/jenkins_default_parameters.png)
