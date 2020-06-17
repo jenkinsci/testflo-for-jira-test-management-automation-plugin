@@ -110,7 +110,7 @@
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <finalName>testflo-test-results-publisher-${project.version}</finalName>
+        <finalName>testflo-for-jira-test-management-automation-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
