@@ -11,7 +11,7 @@
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>testflo-for-jira-test-management-automation</artifactId>
     <packaging>hpi</packaging>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>TestFLO - Test Management for Jira</name>
     <description>This plugin allows to publish test results to TestFLO app</description>
 
@@ -27,7 +27,7 @@
         <connection>scm:git:ssh://git@github.com/jenkinsci/${project.artifactId}-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/${project.artifactId}-plugin.git</developerConnection>
         <url>http://github.com/jenkinsci/${project.artifactId}-plugin</url>
-      <tag>testflo-for-jira-test-management-automation-1.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <developers>
