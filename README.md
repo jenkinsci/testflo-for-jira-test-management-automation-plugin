@@ -10,10 +10,10 @@ This plugin integrates Jenkins with TestFLO for jira app, allowing to publish bu
 - TestNG
 
 ### Usage
-This plugin provides new build task, which should be used in Post-build actions in the configuration of jenkins job:
+This plugin provides new build task, which should be used in Post-build actions in the configuration of jenkins job:  
 ![](docs/images/post_build_action_select.png)
 
-Following fields are present:
+Following fields are present:  
 ![](docs/images/task_configuration.png)
 
 - Jira URL - URL to Jira instance, which receives test results
@@ -22,10 +22,10 @@ Following fields are present:
 - Test results directory - Directories from which task gets test results files
 - Missing Test Plan key parameter behaviour - when task doesn't get Jira Test Plan issue key, it can either skip this task or fail it
 
-To verify task configuration, you can use "Test connection" button: 
+To verify task configuration, you can use "Test connection" button:  
 ![](docs/images/connection_success.png)
 
-To make job possible to trigger from TestFLO app, it is required to parametrize job with 3 parameters:
+To make job possible to trigger from TestFLO app, it is required to parametrize job with 3 parameters:  
 ![](docs/images/job_parameters.png)
 - testPlanKey - contains issue key of Test Plan from which job is being run
 - targetIteration - tells whether to add Test Cases to current iteration in test plan, or to create new. You can provide default value using these options: 
@@ -37,22 +37,22 @@ You can define default value, using these options:
     - UPDATE_EXISTING
 
 #### Running tests from Jira
-Most common usage is to run tests from Jira, using TestFLO app.
+Most common usage is to run tests from Jira, using TestFLO app.  
 ![](docs/images/jira_run.png)
 
-Clicking on run button triggers execution of selected job in Jenkins.
+Clicking on run button triggers execution of selected job in Jenkins.  
 ![](docs/images/jenkins_progress.png)
 
-After Job completes, test results are sent back to Jira, which become Test Case issues on original Test Plan.
+After Job completes, test results are sent back to Jira, which become Test Case issues on original Test Plan.  
 ![](docs/images/jira_results.png) 
 
 #### Running tests directly from Jenkins manually
-Another possible way to run tests is to trigger job execution manually, providing required parameters, which normally are handled automatically, using first approach.
+Another possible way to run tests is to trigger job execution manually, providing required parameters, which normally are handled automatically, using first approach.  
 ![](docs/images/jenkins_manual_run.png)
 
-In this case, job completed successfully fixing previous failed tests, displaying them in next Test Plan iteration.
+In this case, job completed successfully fixing previous failed tests, displaying them in next Test Plan iteration.  
 ![](docs/images/jira_results_next_iteration.png)
 
 #### Running tests directly from Jenkins as a part of CI process
-It is also possible to use automatic job execution, e.g. after changes in code repository are pushed. This however requires specifying default parameters in plugin configuration.
+It is also possible to use automatic job execution, e.g. after changes in code repository are pushed. This however requires specifying default parameters in plugin configuration.  
 ![](docs/images/jenkins_default_parameters.png)
