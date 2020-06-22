@@ -1,5 +1,5 @@
 ### About the plugin
-This plugin integrates Jenkins with TestFLO for jira app, allowing to publish build test results and import them as Test Cases in Jira.
+This plugin integrates Jenkins with [TestFLO](https://marketplace.atlassian.com/apps/1211393/testflo-test-management-for-jira?hosting=datacenter&tab=overview) for Jira app, allowing to publish build test results and import them as Test Cases in Jira.
 
 ### Requirements
 - Jenkins 2.138.4 or higher
