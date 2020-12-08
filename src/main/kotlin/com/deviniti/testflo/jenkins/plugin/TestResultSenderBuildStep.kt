@@ -53,7 +53,7 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
     }
 
     @SuppressWarnings("deprecated")
-    override fun perform(run: Run<*, *>, workspace: FilePath, launcher: Launcher, listener: TaskListener) {
+    override fun perform(run: Run<*, *>, workspace: FilePath, envVars: EnvVars, launcher: Launcher, listener: TaskListener) {
         var shouldSendResults = true
 
         fun checkRequiredConfig(errorMessage: String, isValid: Boolean) {
@@ -83,13 +83,12 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
 
         val (outFolder, testResultFiles) = getTestResultFiles(workspace)
         try {
-            val env = run.getEnvironment(listener)
-            val testPlanKey = env[ConfigurationField.TEST_PLAN_KEY]
-            val testCaseCreationStrategy = env[ConfigurationField.TEST_CASE_CREATION_STRATEGY]
+            val testPlanKey = envVars[ConfigurationField.TEST_PLAN_KEY]
+            val testCaseCreationStrategy = envVars[ConfigurationField.TEST_CASE_CREATION_STRATEGY]
                     ?.takeUnless { it.isBlank() }
                     ?.let(TestCaseCreationStrategy::valueOf)
                     ?: CREATE_AND_UPDATE
-            val targetIteration = env[ConfigurationField.TARGET_ITERATION]
+            val targetIteration = envVars[ConfigurationField.TARGET_ITERATION]
                     ?.takeUnless { it.isBlank() }
                     ?.let(TargetIteration::valueOf)
                     ?: CURRENT_ITERATION
