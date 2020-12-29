@@ -2,7 +2,7 @@
 This plugin integrates Jenkins with [TestFLO](https://marketplace.atlassian.com/apps/1211393/testflo-test-management-for-jira?hosting=datacenter&tab=overview) for Jira app, allowing to publish build test results and import them as Test Cases in Jira.
 
 ### Requirements
-- Jenkins 2.138.4 or higher
+- Jenkins 2.249 or higher
 - Jira instance (server / data center) with installed TestFLO app  
 
 ### Supported test results formats
@@ -56,3 +56,29 @@ In this case, job completed successfully fixing previous failed tests, displayin
 #### Running tests directly from Jenkins as a part of CI process
 It is also possible to use automatic job execution, e.g. after changes in code repository are pushed. This however requires specifying default parameters in plugin configuration.  
 ![](docs/images/jenkins_default_parameters.png)
+
+Another option is to use environment variables instead of job parameters. That way, a job can be parameterless, which could be more useful for scripting purposes.
+Example below uses Jenkins pipeline syntax, providing required parameters inside the "environment" directive. 
+
+```groovy
+pipeline {
+    agent any
+    environment {
+        testPlanKey = 'DDD-804'
+        testCaseCreationStrategy = 'CREATE_AND_UPDATE'
+        targetIteration = 'CURRENT_ITERATION'
+    }
+    post {
+        always {
+            step([
+                $class: 'TestResultSenderBuildStep',
+                jiraURL: 'http://localhost:5000/jira',
+                jiraUserName: 'admin',
+                jiraPassword: hudson.util.Secret.fromString(SECRET),
+                testResultsDirectory: '**/target/surefire-reports/*.xml',
+                missingTestPlanKeyStrategy: 'FAIL_TASK'
+            ])
+        }       
+    }
+}
+```
