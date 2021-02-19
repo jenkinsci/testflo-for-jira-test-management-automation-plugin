@@ -5,9 +5,9 @@ import com.deviniti.testflo.jira.InvalidJiraUrl
 import com.deviniti.testflo.jira.JiraRestClientImpl
 import com.deviniti.testflo.jira.UnexpectedError
 import com.deviniti.testflo.testsender.*
-import com.deviniti.testflo.testsender.MissingTestPlanKeyStrategy.*
-import com.deviniti.testflo.testsender.TargetIteration.*
-import com.deviniti.testflo.testsender.TestCaseCreationStrategy.*
+import com.deviniti.testflo.testsender.MissingTestPlanKeyStrategy.FAIL_TASK
+import com.deviniti.testflo.testsender.TargetIteration.CURRENT_ITERATION
+import com.deviniti.testflo.testsender.TestCaseCreationStrategy.CREATE_AND_UPDATE
 import hudson.EnvVars
 import hudson.Extension
 import hudson.FilePath
@@ -21,27 +21,28 @@ import hudson.tasks.BuildStepDescriptor
 import hudson.tasks.Notifier
 import hudson.tasks.Publisher
 import hudson.util.FormValidation
+import hudson.util.ListBoxModel
 import hudson.util.Secret
+import jenkins.model.Jenkins
 import jenkins.tasks.SimpleBuildStep
 import org.kohsuke.stapler.DataBoundConstructor
 import org.kohsuke.stapler.QueryParameter
+import org.kohsuke.stapler.verb.POST
 import java.io.File
 import java.nio.file.Files
-import jenkins.model.Jenkins
-import org.kohsuke.stapler.verb.POST
 
 val jiraRestClient = JiraRestClientImpl()
-val testResultSender: TestResultSender = TestResultSenderImpl(jiraRestClient)
-
+var testResultSender: TestResultSender = TestResultSenderImpl(jiraRestClient)
 /**
  * Fields cannot be private, as Jenkins doesn't see them in task configuration
  */
 class TestResultSenderBuildStep @DataBoundConstructor constructor(
-        val jiraURL: String,
-        val jiraUserName: String,
-        val jiraPassword: Secret,
-        val testResultsDirectory: String,
-        val missingTestPlanKeyStrategy: MissingTestPlanKeyStrategy
+    val jiraURL: String,
+    val jiraUserName: String,
+    val jiraPassword: Secret,
+    val testResultsDirectory: String,
+    val missingTestPlanKeyStrategy: MissingTestPlanKeyStrategy,
+    val testResultsType: TestResultsType
 ) : Notifier(), SimpleBuildStep {
 
     companion object {
@@ -85,13 +86,13 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
         try {
             val testPlanKey = envVars[ConfigurationField.TEST_PLAN_KEY]
             val testCaseCreationStrategy = envVars[ConfigurationField.TEST_CASE_CREATION_STRATEGY]
-                    ?.takeUnless { it.isBlank() }
-                    ?.let(TestCaseCreationStrategy::valueOf)
-                    ?: CREATE_AND_UPDATE
+                ?.takeUnless { it.isBlank() }
+                ?.let(TestCaseCreationStrategy::valueOf)
+                ?: CREATE_AND_UPDATE
             val targetIteration = envVars[ConfigurationField.TARGET_ITERATION]
-                    ?.takeUnless { it.isBlank() }
-                    ?.let(TargetIteration::valueOf)
-                    ?: CURRENT_ITERATION
+                ?.takeUnless { it.isBlank() }
+                ?.let(TargetIteration::valueOf)
+                ?: CURRENT_ITERATION
 
             checkRequiredConfig(BLANK_JIRA_URL, jiraURL.isNotBlank())
             checkRequiredConfig(BLANK_JIRA_USERNAME, jiraUserName.isNotBlank())
@@ -101,14 +102,15 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
 
             if (shouldSendResults) {
                 val configuration = Configuration(
-                        jiraUrl = jiraURL,
-                        testPlanKey = testPlanKey!!,
-                        buildUrl = runCatching { run.getAbsoluteUrl() }.getOrDefault(""),
-                        testCaseCreationStrategy = testCaseCreationStrategy,
-                        targetIteration = targetIteration,
-                        jiraUsername = jiraUserName,
-                        jiraPassword = jiraPassword.plainText,
-                        testResultFiles = testResultFiles
+                    jiraUrl = jiraURL,
+                    testPlanKey = testPlanKey!!,
+                    buildUrl = runCatching { run.getAbsoluteUrl() }.getOrDefault(""),
+                    testCaseCreationStrategy = testCaseCreationStrategy,
+                    targetIteration = targetIteration,
+                    jiraUsername = jiraUserName,
+                    jiraPassword = jiraPassword.plainText,
+                    testResultFiles = testResultFiles,
+                    testResultsType = TestResultsType.CUCUMBER
                 )
                 val error = testResultSender.send(configuration)
                 if (error != null) {
@@ -129,14 +131,21 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
         workspace.copyRecursiveTo(testResultsDirectory, FilePath(outFolder))
 
         return outFolder to outFolder.walkTopDown()
-                .filter { it.isFile }
-                .toList()
+            .filter { it.isFile }
+            .toList()
     }
 
     @Extension
     class DescriptorImpl : BuildStepDescriptor<Publisher>() {
         @JellyMethod
         fun getDefaultTestResultsDirectory() = "**/target/surefire-reports/*.xml"
+
+        @JellyMethod
+        fun doFillTestResultsTypeItems() = ListBoxModel().apply {
+            add("JUnit", TestResultsType.JUNIT.name)
+            add("TestNG", TestResultsType.TESTNG.name)
+            add("Cucumber", TestResultsType.CUCUMBER.name)
+        }
 
         override fun isApplicable(aClass: Class<out AbstractProject<*, *>?>?) = true
 
@@ -147,9 +156,9 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
         fun doTestConnection(@QueryParameter jiraURL: String, @QueryParameter jiraUserName: String, @QueryParameter jiraPassword: Secret): FormValidation {
             Jenkins.get().checkPermission(Permission.CONFIGURE)
             val validationResult = jiraRestClient.validateJiraCredentials(
-                    jiraUrl = jiraURL,
-                    username = jiraUserName,
-                    password = jiraPassword.plainText
+                jiraUrl = jiraURL,
+                username = jiraUserName,
+                password = jiraPassword.plainText
             )
 
             return when (validationResult) {
