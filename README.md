@@ -78,6 +78,7 @@ pipeline {
                 jiraUserName: 'admin',
                 jiraPassword: hudson.util.Secret.fromString(SECRET),
                 testResultsDirectory: '**/target/surefire-reports/*.xml',
+                testResultsType: 'JUNIT',
                 missingTestPlanKeyStrategy: 'FAIL_TASK'
             ])
         }       

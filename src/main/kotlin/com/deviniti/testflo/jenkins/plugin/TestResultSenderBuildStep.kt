@@ -144,7 +144,7 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
         fun doFillTestResultsTypeItems() = ListBoxModel().apply {
             add("JUnit", TestResultsType.JUNIT.name)
             add("TestNG", TestResultsType.TESTNG.name)
-            add("Cucumber", TestResultsType.CUCUMBER.name)
+            add("Cucumber (JSON)", TestResultsType.CUCUMBER.name)
         }
 
         override fun isApplicable(aClass: Class<out AbstractProject<*, *>?>?) = true
