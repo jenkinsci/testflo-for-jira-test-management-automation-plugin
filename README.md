@@ -62,6 +62,15 @@ It is also possible to use automatic job execution, e.g. after changes in code r
 Another option is to use environment variables instead of job parameters. That way, a job can be parameterless, which could be more useful for scripting purposes.
 Example below uses Jenkins pipeline syntax, providing required parameters inside the "environment" directive. 
 
+Variable "testResultsType" accepts the following values:
+- JUNIT
+- TESTNG
+- CUCUMBER
+
+Variable "missingTestPlanKeyStrategy" accepts the following values:
+- FAIL_TASK
+- SKIP_TASK
+
 ```groovy
 pipeline {
     agent any
