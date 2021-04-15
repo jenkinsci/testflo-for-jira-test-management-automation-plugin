@@ -19,7 +19,7 @@
         <jenkins.version>2.249</jenkins.version>
         <java.level>8</java.level>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin.version>1.4.30</kotlin.version>
+        <kotlin.version>1.4.32</kotlin.version>
     </properties>
 
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
@@ -52,7 +52,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.deviniti.testflo</groupId>
+            <groupId>com.testflo</groupId>
             <artifactId>test-results-sender</artifactId>
             <exclusions>
                 <exclusion>
@@ -98,28 +98,12 @@
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
         </repository>
-        <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-deviniti-maven-repository</id>
-            <name>bintray</name>
-            <url>https://dl.bintray.com/deviniti/maven-repository</url>
-        </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
             <id>repo.jenkins-ci.org</id>
             <url>https://repo.jenkins-ci.org/public/</url>
-        </pluginRepository>
-        <pluginRepository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-deviniti-maven-repository</id>
-            <name>bintray-plugins</name>
-            <url>https://dl.bintray.com/deviniti/maven-repository</url>
         </pluginRepository>
     </pluginRepositories>
 
