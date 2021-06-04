@@ -110,7 +110,7 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
                     jiraUsername = jiraUserName,
                     jiraPassword = jiraPassword.plainText,
                     testResultFiles = testResultFiles,
-                    testResultsType = TestResultsType.CUCUMBER
+                    testResultsType = testResultsType
                 )
                 val error = testResultSender.send(configuration)
                 if (error != null) {
