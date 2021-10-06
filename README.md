@@ -8,24 +8,26 @@ This plugin integrates Jenkins with [TestFLO](https://marketplace.atlassian.com/
 ### Supported test results formats
 - JUnit
 - TestNG
+- Cucumber (only in json output format)
 
 ### Usage
-This plugin provides new build task, which should be used in Post-build actions in the configuration of jenkins job:  
+This plugin provides new build task, which should be used in Post-build actions in the configuration of a jenkins job:  
 ![](docs/images/post_build_action_select.png)
 
-Following fields are present:  
+The following fields are present:  
 ![](docs/images/task_configuration.png)
 
 - Jira URL - URL to Jira instance, which receives test results
 - User - Jira user login
 - Password - Jira user password
-- Test results directory - Directories from which task gets test results files
+- Test results type - Framework used to produce result files. Cucumber supports only json results format
+- Test results files - Paths of test results files
 - Missing Test Plan key parameter behaviour - when task doesn't get Jira Test Plan issue key, it can either skip this task or fail it
 
 To verify task configuration, you can use "Test connection" button:  
 ![](docs/images/connection_success.png)
 
-To make job possible to trigger from TestFLO app, it is required to parametrize job with 3 parameters:  
+To make job possible to trigger from the TestFLO app, it is required to parametrize a job with 3 parameters:  
 ![](docs/images/job_parameters.png)
 - testPlanKey - contains issue key of Test Plan from which job is being run
 - targetIteration - tells whether to add Test Cases to current iteration in test plan, or to create new. You can provide default value using these options: 
@@ -37,20 +39,20 @@ You can define default value, using these options:
     - UPDATE_EXISTING
 
 #### Running tests from Jira
-Most common usage is to run tests from Jira, using TestFLO app.  
+Most common usage is to run tests from Jira, using the TestFLO app.  
 ![](docs/images/jira_run.png)
 
-Clicking on run button triggers execution of selected job in Jenkins.  
+Clicking on the run button triggers execution of selected job in Jenkins.  
 ![](docs/images/jenkins_progress.png)
 
 After Job completes, test results are sent back to Jira, which become Test Case issues on original Test Plan.  
 ![](docs/images/jira_results.png) 
 
 #### Running tests directly from Jenkins manually
-Another possible way to run tests is to trigger job execution manually, providing required parameters, which normally are handled automatically, using first approach.  
+Another possible way to run tests is to trigger a job execution manually, providing required parameters, which normally are handled automatically, using first approach.  
 ![](docs/images/jenkins_manual_run.png)
 
-In this case, job completed successfully fixing previous failed tests, displaying them in next Test Plan iteration.  
+In this case, the job completed successfully fixing previous failed tests, displaying them in a next Test Plan iteration.  
 ![](docs/images/jira_results_next_iteration.png)
 
 #### Running tests directly from Jenkins as a part of CI process
@@ -59,6 +61,15 @@ It is also possible to use automatic job execution, e.g. after changes in code r
 
 Another option is to use environment variables instead of job parameters. That way, a job can be parameterless, which could be more useful for scripting purposes.
 Example below uses Jenkins pipeline syntax, providing required parameters inside the "environment" directive. 
+
+Variable "testResultsType" accepts the following values:
+- JUNIT
+- TESTNG
+- CUCUMBER
+
+Variable "missingTestPlanKeyStrategy" accepts the following values:
+- FAIL_TASK
+- SKIP_TASK
 
 ```groovy
 pipeline {
@@ -76,6 +87,7 @@ pipeline {
                 jiraUserName: 'admin',
                 jiraPassword: hudson.util.Secret.fromString(SECRET),
                 testResultsDirectory: '**/target/surefire-reports/*.xml',
+                testResultsType: 'JUNIT',
                 missingTestPlanKeyStrategy: 'FAIL_TASK'
             ])
         }       

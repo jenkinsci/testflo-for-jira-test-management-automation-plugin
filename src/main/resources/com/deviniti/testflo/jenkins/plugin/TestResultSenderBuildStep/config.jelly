@@ -12,8 +12,12 @@
       <f:password  />
     </f:entry>
 
-    <f:entry title="Test results directory" field="testResultsDirectory" description="This is a comma separated list of test result directories. You can also use Ant style patterns such as **/test-reports/*.xml">
-      <f:textbox  default="${descriptor.defaultTestResultsDirectory}" />
+    <f:entry title="Test output file format" field="testResultsType">
+        <f:select field="testResultsType" default="JUNIT" />
+    </f:entry>
+
+    <f:entry title="Test results files" field="testResultsDirectory" description="This is a comma separated list of test result files. You can also use Ant style patterns such as **/test-reports/*.xml">
+      <f:textbox default="${descriptor.defaultTestResultsDirectory}" />
     </f:entry>
 
     <f:entry title="Missing Test Plan key parameter behavior"/>
