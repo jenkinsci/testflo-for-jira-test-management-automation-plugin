@@ -147,6 +147,7 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
             add("JUnit", TestResultsType.JUNIT.name)
             add("TestNG", TestResultsType.TESTNG.name)
             add("Cucumber (JSON only, read help on the right)", TestResultsType.CUCUMBER.name)
+            add("NUnit", TestResultsType.NUNIT.name)
         }
 
         override fun isApplicable(aClass: Class<out AbstractProject<*, *>?>?) = true
