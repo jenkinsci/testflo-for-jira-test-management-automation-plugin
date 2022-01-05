@@ -11,7 +11,7 @@
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>testflo-for-jira-test-management-automation</artifactId>
     <packaging>hpi</packaging>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.2.0</version>
     <name>TestFLO - Test Management for Jira</name>
     <description>This plugin allows to publish test results to TestFLO app</description>
 
@@ -60,7 +60,7 @@
                     <artifactId>commons-cli</artifactId>
                 </exclusion>
             </exclusions>
-            <version>1.0.4</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

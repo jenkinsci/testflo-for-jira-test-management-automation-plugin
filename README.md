@@ -36,7 +36,7 @@ The following fields are present:
 To verify task configuration, you can use "Test connection" button:  
 ![](docs/images/connection_success.png)
 
-To make job possible to trigger from the TestFLO app, it is required to parametrize a job with 3 parameters:  
+To make job possible to trigger from the TestFLO app, it is required to parametrize a job with 4 parameters:  
 ![](docs/images/job_parameters.png)
 
 - testPlanKey - contains issue key of Test Plan from which job is being run
@@ -47,6 +47,7 @@ To make job possible to trigger from the TestFLO app, it is required to parametr
   default value, using these options:
     - CREATE_AND_UPDATE
     - UPDATE_EXISTING
+- testFloImportResultsParameters - contains parameters as JSON object sent by TestFLO Run automated tests operation, used for passing parameters to TestFLO test results importer
 
 #### Running tests from Jira
 

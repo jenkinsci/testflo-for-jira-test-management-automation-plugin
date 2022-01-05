@@ -85,6 +85,7 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
         val (outFolder, testResultFiles) = getTestResultFiles(workspace)
         try {
             val testPlanKey = envVars[ConfigurationField.TEST_PLAN_KEY]
+            val importResultsParameters = envVars[ConfigurationField.TEST_FLO_IMPORT_RESULTS_PARAMETERS]
             val testCaseCreationStrategy = envVars[ConfigurationField.TEST_CASE_CREATION_STRATEGY]
                 ?.takeUnless { it.isBlank() }
                 ?.let(TestCaseCreationStrategy::valueOf)
@@ -110,7 +111,8 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
                     jiraUsername = jiraUserName,
                     jiraPassword = jiraPassword.plainText,
                     testResultFiles = testResultFiles,
-                    testResultsType = testResultsType
+                    testResultsType = testResultsType,
+                    importResultsParameters = importResultsParameters
                 )
                 val error = testResultSender.send(configuration)
                 if (error != null) {
