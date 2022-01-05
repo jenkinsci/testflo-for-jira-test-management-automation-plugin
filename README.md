@@ -6,7 +6,7 @@ for Jira app, allowing to publish build test results and import them as Test Cas
 ### Requirements
 
 - Jenkins 2.249 or higher
-- Jira instance (server / data center) with installed TestFLO app
+- Jira instance (Server / Data Center) with TestFLO installed and [CI Server connection configured](https://deviniti.com/support/addon/server/testflo/latest/ci-servers-configuration/).
 
 ### Supported test results formats
 
@@ -16,11 +16,7 @@ for Jira app, allowing to publish build test results and import them as Test Cas
 
 ### Compatibility with TestFLO app
 
-|Jenkins plugin version|TestFLO app version|
-|------|------|
-|1.2.0|8.10.0 and higher|
-|1.1.0|8.9.0|
-|1.0.5|8.0.0 to 8.8.1|
+![](docs/images/compatibility-with-testflo-app.png)
 
 ### Usage
 
