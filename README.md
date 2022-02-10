@@ -13,6 +13,7 @@ for Jira app, allowing to publish build test results and import them as Test Cas
 - JUnit
 - TestNG
 - Cucumber (only in json output format)
+- NUnit
 
 ### Compatibility with TestFLO app
 
@@ -83,6 +84,7 @@ Variable "testResultsType" accepts the following values:
 - JUNIT
 - TESTNG
 - CUCUMBER
+- NUNIT
 
 Variable "missingTestPlanKeyStrategy" accepts the following values:
 
