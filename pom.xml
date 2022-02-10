@@ -11,7 +11,7 @@
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>testflo-for-jira-test-management-automation</artifactId>
     <packaging>hpi</packaging>
-    <version>1.3.0</version>
+    <version>1.3.0-SNAPSHOT</version>
     <name>TestFLO - Test Management for Jira</name>
     <description>This plugin allows to publish test results to TestFLO app</description>
 
