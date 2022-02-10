@@ -13,10 +13,16 @@ for Jira app, allowing to publish build test results and import them as Test Cas
 - JUnit
 - TestNG
 - Cucumber (only in json output format)
+- NUnit
 
 ### Compatibility with TestFLO app
 
-![](docs/images/compatibility-with-testflo-app.png)
+| Jenkins plugin version | TestFLO app version |
+|------------------------|---------------------|
+| 1.3.0                  | 8.10.1 and higher   |
+| 1.2.0                  | 8.10.0              |
+| 1.1.0                  | 8.9.0               |
+| 1.0.5                  | 8.00 to 8.8.1       |
 
 ### Usage
 
@@ -83,6 +89,7 @@ Variable "testResultsType" accepts the following values:
 - JUNIT
 - TESTNG
 - CUCUMBER
+- NUNIT
 
 Variable "missingTestPlanKeyStrategy" accepts the following values:
 
