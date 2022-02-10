@@ -20,6 +20,7 @@
         <java.level>8</java.level>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin.version>1.6.10</kotlin.version>
+        <project.scm.id>github</project.scm.id>
     </properties>
 
     <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
