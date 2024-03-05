@@ -30,5 +30,13 @@
       <f:radio name="missingTestPlanKeyStrategy" value="SKIP_TASK" checked="${instance.missingTestPlanKeyStrategy == 'SKIP_TASK'}" />
     </f:entry>
 
+    <f:entry title="Retry import when target Test Plan has active progress" field="retryOnActiveProgress" description="If checked, import request will be retried if TestFLO response indicates that other import to target Test Plan is active">
+        <f:checkbox name="retryOnActiveProgress" checked="${instance.retryOnActiveProgress}"/>
+    </f:entry>
+
+    <f:entry title="Enable detail log" field="loggingEnabled">
+        <f:checkbox name="loggingEnabled" checked="${instance.loggingEnabled}"/>
+    </f:entry>
+
     <f:validateButton title="Test connection" progress="Testing connection..." method="testConnection" with="jiraURL,jiraUserName,jiraPassword"/>
 </j:jelly>

@@ -30,6 +30,7 @@ import org.kohsuke.stapler.QueryParameter
 import org.kohsuke.stapler.verb.POST
 import java.io.File
 import java.nio.file.Files
+import java.time.LocalDateTime
 
 val jiraRestClient = JiraRestClientImpl()
 var testResultSender: TestResultSender = TestResultSenderImpl(jiraRestClient)
@@ -42,7 +43,9 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
     val jiraPassword: Secret,
     val testResultsDirectory: String,
     val missingTestPlanKeyStrategy: MissingTestPlanKeyStrategy,
-    val testResultsType: TestResultsType
+    val testResultsType: TestResultsType,
+    val retryOnActiveProgress: Boolean? = false,
+    val loggingEnabled: Boolean? = false,
 ) : Notifier(), SimpleBuildStep {
 
     companion object {
@@ -82,6 +85,13 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
             }
         }
 
+        fun logMessage(message: String) {
+            if(loggingEnabled != null && loggingEnabled) {
+                val time = LocalDateTime.now().toLocalTime().toString()
+                listener.logger.println("$time - $message")
+            }
+        }
+
         val (outFolder, testResultFiles) = getTestResultFiles(workspace)
         try {
             val testPlanKey = envVars[ConfigurationField.TEST_PLAN_KEY]
@@ -112,19 +122,28 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
                     jiraPassword = jiraPassword.plainText,
                     testResultFiles = testResultFiles,
                     testResultsType = testResultsType,
-                    importResultsParameters = importResultsParameters
+                    importResultsParameters = importResultsParameters,
+                    retryOnActiveProgress = retryOnActiveProgress ?: false,
+                    logger = {
+                        logMessage(it)
+                    }
                 )
+                logMessage("Sending test results to $jiraURL/browse/$testPlanKey")
                 val error = testResultSender.send(configuration)
                 if (error != null) {
                     listener.error(error.response.body().asString("text/plain"))
                     listener.error(error.message, error.cause)
                     run.setResult(FAILURE)
+                } else {
+                    logMessage("Import finished")
                 }
             }
         } finally {
             outFolder.deleteRecursively()
         }
     }
+
+
 
     private fun getTestResultFiles(workspace: FilePath): Pair<File, List<File>> {
         val outFolderPath = Files.createTempDirectory("tempfolder")
