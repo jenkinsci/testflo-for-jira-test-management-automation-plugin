@@ -19,6 +19,7 @@ for Jira app, allowing to publish build test results and import them as Test Cas
 
 | Jenkins plugin version | TestFLO app version |
 |------------------------|---------------------|
+| 1.3.3                  | 8.10.1 and higher   |
 | 1.3.2                  | 8.10.1 and higher   |
 | 1.3.0                  | 8.10.1 and higher   |
 | 1.2.0                  | 8.10.0              |

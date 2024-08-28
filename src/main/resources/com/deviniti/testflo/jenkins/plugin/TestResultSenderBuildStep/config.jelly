@@ -34,6 +34,10 @@
         <f:checkbox name="retryOnActiveProgress" checked="${instance.retryOnActiveProgress}"/>
     </f:entry>
 
+    <f:entry title="Retry interval in seconds" field="retryIntervalInSeconds">
+      <f:textbox name="retryIntervalInSeconds" default="30" clazz="positive-number" />
+    </f:entry>
+
     <f:entry title="Enable detail log" field="loggingEnabled">
         <f:checkbox name="loggingEnabled" checked="${instance.loggingEnabled}"/>
     </f:entry>

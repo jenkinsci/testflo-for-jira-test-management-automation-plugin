@@ -45,6 +45,7 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
     val missingTestPlanKeyStrategy: MissingTestPlanKeyStrategy,
     val testResultsType: TestResultsType,
     val retryOnActiveProgress: Boolean? = false,
+    val retryIntervalInSeconds: Long? = 30,
     val loggingEnabled: Boolean? = false,
 ) : Notifier(), SimpleBuildStep {
 
@@ -124,6 +125,7 @@ class TestResultSenderBuildStep @DataBoundConstructor constructor(
                     testResultsType = testResultsType,
                     importResultsParameters = importResultsParameters,
                     retryOnActiveProgress = retryOnActiveProgress ?: false,
+                    retryIntervalInSeconds = retryIntervalInSeconds ?: 30,
                     logger = {
                         logMessage(it)
                     }
