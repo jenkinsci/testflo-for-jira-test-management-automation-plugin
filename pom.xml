@@ -16,7 +16,9 @@
     <description>This plugin allows to publish test results to TestFLO app</description>
 
     <properties>
-        <jenkins.version>2.249</jenkins.version>
+        <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
+        <jenkins.baseline>2.249</jenkins.baseline>
+        <jenkins.version>${jenkins.baseline}.1</jenkins.version>
         <java.level>8</java.level>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin.version>1.7.22</kotlin.version>
@@ -43,7 +45,7 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.249.x</artifactId>
+                <artifactId>bom-${jenkins.baseline}.x</artifactId>
                 <version>12</version>
                 <scope>import</scope>
                 <type>pom</type>
